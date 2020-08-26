@@ -8,9 +8,22 @@
     "@types/jest": "^26.0.10",
     "@types/react": "^16.9.47",
     "@types/wavesurfer.js": "^3.3.1",
-    "eslint": "^7.7.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
     "eslint-config-bliss": "^5.0.0",
-    "jest": "^26.4.2",
+    "eslint-config-erb": "1.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-compat": "^3.7.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "ts-jest": "^26.2.0",
@@ -31,7 +44,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "bliss"
+      "erb"
     ]
   },
   "renovate": {
