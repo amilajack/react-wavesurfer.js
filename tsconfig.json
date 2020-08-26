@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["dom"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "outDir": "dist",
+    "jsx": "react",
+    "strict": true
+  },
+  "include": ["index.tsx"]
+}

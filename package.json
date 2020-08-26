@@ -1,0 +1,55 @@
+{
+  "name": "@amilajack/react-wavesurfer",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "author": "Amila Welihinda <amilajack@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/react": "^16.9.47",
+    "@types/wavesurfer.js": "^3.3.1",
+    "eslint": "^7.7.0",
+    "eslint-config-bliss": "^5.0.0",
+    "jest": "^26.4.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^26.2.0",
+    "typescript": "^4.0.2",
+    "wavesurfer.js": "^4.0.1"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "wavesurfer.js": "^4.0.1"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rm -rf dist && tsc",
+    "lint": "eslint . --ignore-pattern dist",
+    "lint-fix": "yarn lint --fix",
+    "preversion": "yarn build",
+    "test": "yarn build && jest"
+  },
+  "eslintConfig": {
+    "extends": [
+      "bliss"
+    ]
+  },
+  "renovate": {
+    "extends": [
+      "bliss"
+    ]
+  },
+  "keywords": [
+    "react",
+    "wavesurfer.js",
+    "wavesurfer",
+    "waveform"
+  ],
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@types/react-dom": "^16.9.8"
+  }
+}
