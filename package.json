@@ -11,7 +11,7 @@
     "@storybook/addon-links": "^6.0.21",
     "@storybook/react": "^6.0.21",
     "@types/jest": "^26.0.10",
-    "@types/react": "^16.9.47",
+    "@types/react": "^16.9.49",
     "@types/wavesurfer.js": "^3.3.1",
     "babel-loader": "^8.1.0",
     "eslint": "^7.2.0",
