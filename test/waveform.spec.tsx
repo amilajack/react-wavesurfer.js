@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
-import Wavesurfer from '../index';
+import Wavesurfer from '../src/index';
 
 // @HACK: jsdom doesn't support HTMLMediaElement/audio playback
 window.HTMLMediaElement.prototype.load = () => {};

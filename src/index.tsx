@@ -461,7 +461,8 @@ export default class WavesurferComponent extends Component<Props, State> {
   componentWillUnmount() {
     if (!this.wavesurfer) throw new Error('wavesurfer not initialized');
     // remove all listeners
-    this.wavesurfer.unAll();
+    // @ts-ignore TS defs are wrong
+    EVENTS.forEach(e => this.wavesurfer.un(e))
 
     // destroy wavesurfer instance
     this.wavesurfer.destroy();

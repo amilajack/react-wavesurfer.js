@@ -12,5 +12,5 @@
     "strict": true,
     "sourceMap": true
   },
-  "include": ["index.tsx"]
+  "include": ["src/index.tsx"]
 }

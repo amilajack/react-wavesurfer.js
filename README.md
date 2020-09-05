@@ -1,5 +1,5 @@
 react-wavesurfer.js
-================
+===================
 
 ![Test](https://github.com/amilajack/react-wavesurfer/workflows/Test/badge.svg)
 [![NPM version](https://badge.fury.io/js/react-wavesurfer.js.svg)](http://badge.fury.io/js/react-wavesurfer.js)
@@ -41,7 +41,7 @@ function MyWaveform() {
 }
 ```
 
-## Zooming
+## Zooming (Work in Progress)
 
 ```tsx
 import React, { useState } from 'react';
@@ -72,7 +72,7 @@ function MyWaveform() {
 }
 ```
 
-## MiniMap and Timeline
+## Minimap and Timeline (Work in Progress)
 
 ```tsx
 import React, { useState } from 'react';
@@ -100,3 +100,18 @@ function MyWaveform() {
   );
 }
 ```
+
+## Roadmap
+
+- [x] Basic Waveform Usage
+- [ ] Regions Plugin Support
+- [ ] Timeline Plugin Support
+- [ ] Minimap Plugin Support
+- [ ] Spectrogram Plugin Support
+- [ ] Cursor Plugin Support
+- [ ] MediaSession Plugin Support
+- [ ] Microphone Plugin Support
+
+## Credits
+
+Credits go to [mspae](https://github.com/mspae) for starting the [inital work on this](https://github.com/mspae/react-wavesurfer)
