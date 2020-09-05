@@ -1,16 +1,16 @@
-@amilajack/react-wavesurfer
+react-wavesurfer.js
 ================
 
-![Test](https://github.com/amilajack/reactt-wavesurfer/workflows/Test/badge.svg)
-[![NPM version](https://badge.fury.io/js/@amilajack/react-wavesurfer.svg)](http://badge.fury.io/js/@amilajack/react-wavesurfer)
-[![Dependency Status](https://img.shields.io/david/amilajack/@amilajack/react-wavesurfer.svg)](https://david-dm.org/amilajack/@amilajack/react-wavesurfer)
-[![npm](https://img.shields.io/npm/dm/@amilajack/react-wavesurfer.svg)](https://npm-stat.com/charts.html?package=@amilajack/react-wavesurfer)
+![Test](https://github.com/amilajack/react-wavesurfer/workflows/Test/badge.svg)
+[![NPM version](https://badge.fury.io/js/react-wavesurfer.js.svg)](http://badge.fury.io/js/react-wavesurfer.js)
+[![Dependency Status](https://img.shields.io/david/amilajack/react-wavesurfer.js.svg)](https://david-dm.org/amilajack/react-wavesurfer.js)
+[![npm](https://img.shields.io/npm/dm/react-wavesurfer.js.svg)](https://npm-stat.com/charts.html?package=react-wavesurfer.js)
 
 ## Installation
 
 ```bash
 # NPM
-npm install wavesurfer.js @amilajack/react-wavesurfer
+npm install wavesurfer.js react-wavesurfer.js
 # Yarn
-yarn add wavesurfer.js @amilajack/react-wavesurfer
+yarn add wavesurfer.js react-wavesurfer.js
 ```

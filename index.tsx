@@ -1,96 +1,455 @@
-import React, { useEffect, useRef, useState } from "react";
-import WaveSurfer from "wavesurfer.js";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import WaveSurfer from 'wavesurfer.js'
 
-const formWaveSurferOptions = (ref, refSpec, waveTimeline) => ({
-  container: ref,
-  plugins: [],
-  waveColor: "#F1FA22",
-  progressColor: "OrangeRed",
-  cursorColor: "OrangeRed",
-  barWidth: 3,
-  // barRadius: 3,
-  responsive: true,
-  height: 150,
-  // If true, normalize by the maximum peak instead of 1.0.
-  normalize: true,
-  // Use the PeakCache to improve rendering speed of
-  // large waveforms.
-  partialRender: true,
-});
+const EVENTS = [
+  'audioprocess',
+  'error',
+  'finish',
+  'loading',
+  'mouseup',
+  'pause',
+  'play',
+  'ready',
+  'scroll',
+  'seek',
+  'zoom'
+];
 
-export default function Waveform({ url }) {
-  const waveformRef = useRef();
-  const waveformSpec = useRef();
-  const waveformTimeline = useRef();
-  const wavesurfer = useRef(null);
-  const [playing, setPlay] = useState(false);
-  const [volume, setVolume] = useState(1);
-
-  // create new WaveSurfer instance
-  // On component mount and when url changes
-  useEffect(() => {
-    setPlay(false);
-
-    const options = formWaveSurferOptions(
-      waveformRef.current,
-      waveformSpec.current,
-      waveformTimeline.current
-    );
-    wavesurfer.current = WaveSurfer.create(options);
-
-    wavesurfer.current.load(url);
-
-    wavesurfer.current.on("ready", function () {
-      // wavesurfer.current.play();
-      // setPlay(true);
-
-      wavesurfer.current.setVolume(volume);
-      setVolume(volume);
-    });
-    // Removes events, elements and disconnects Web Audio
-    // nodes.
-    // when component unmount
-    return () => wavesurfer.current.destroy();
-  }, [url, volume]);
-
-  const handlePlayPause = () => {
-    setPlay(!playing);
-    wavesurfer.current.playPause();
-  };
-
-  const onVolumeChange = (e) => {
-    const { target } = e;
-    const newVolume = +target.value;
-
-    if (newVolume) {
-      setVolume(newVolume);
-      wavesurfer.current.setVolume(newVolume || 1);
-    }
-  };
-
-  return (
-    <div>
-      <div id="waveform" ref={waveformRef} />
-      <div className="controls">
-        <button onClick={handlePlayPause}>{!playing ? "Play" : "Pause"}</button>
-        <input
-          type="range"
-          id="volume"
-          name="volume"
-          // waveSurfer recognize value of `0` same as `1`
-          // so we need to set some zero-ish value for
-          // silence
-          min="0.01"
-          max="1"
-          step=".025"
-          onChange={onVolumeChange}
-          defaultValue={volume}
-        />
-        <label htmlFor="volume">Volume</label>
-        <div id="wave-timeline" ref={waveformTimeline} />
-        <div id="wave-spectrogram" ref={waveformSpec} />
-        <div id="annotations" />
-      </div>
-    </div>
-  );
+/**
+ * @description Capitalise the first letter of a string
+ */
+function capitaliseFirstLetter(string: string) {
+  return string
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
 }
+
+/**
+ * @description Throws an error if the prop is defined and not an integer or not positive
+ */
+function positiveIntegerProptype(props, propName: string, componentName: string) {
+  const n = props[propName];
+  if (
+    n !== undefined &&
+    (typeof n !== 'number' || n !== parseInt(n, 10) || n < 0)
+  ) {
+    return new Error(`Invalid ${propName} supplied to ${componentName},
+      expected a positive integer`);
+  }
+
+  return null;
+}
+
+const resizeThrottler = (fn: Function) => () => {
+  let resizeTimeout;
+
+  if (!resizeTimeout) {
+    // use requestAnimationFrame
+    resizeTimeout = setTimeout(() => {
+      resizeTimeout = null;
+      fn();
+    }, 66);
+  }
+};
+
+class WavesurferComponent extends Component {
+  private wavesurfer: WaveSurfer
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isReady: false
+    };
+
+    if (typeof WaveSurfer === undefined) {
+      throw new Error('WaveSurfer is undefined!');
+    }
+
+    this._loadMediaElt = this._loadMediaElt.bind(this);
+    this._loadAudio = this._loadAudio.bind(this);
+    this._seekTo = this._seekTo.bind(this);
+
+    if (this.props.responsive) {
+      this._handleResize = resizeThrottler(() => {
+        // pause playback for resize operation
+        if (this.props.playing) {
+          this.wavesurfer.pause();
+        }
+
+        // resize the waveform
+        this.wavesurfer.drawBuffer();
+
+        // We allow resize before file isloaded, since we can get wave data from outside,
+        // so there might not be a file loaded when resizing
+        if (this.state.isReady) {
+          // restore previous position
+          this._seekTo(this.props.pos);
+        }
+
+        // restore playback
+        if (this.props.playing) {
+          this.wavesurfer.play();
+        }
+      });
+    }
+  }
+
+  componentDidMount() {
+    const options = {
+      ...this.props.options,
+      container: this.wavesurferEl
+    }
+    this.wavesurfer = WaveSurfer.create(options);
+
+    // media element loading is only supported by MediaElement backend
+    if (this.props.mediaElt) {
+      options.backend = 'MediaElement';
+    }
+
+    // file was loaded, wave was drawn
+    this.wavesurfer.on('ready', () => {
+      this.setState({
+        isReady: true,
+        pos: this.props.pos
+      });
+
+      // set initial position
+      if (this.props.pos) {
+        this._seekTo(this.props.pos);
+      }
+
+      // set initial volume
+      if (this.props.volume) {
+        this.wavesurfer.setVolume(this.props.volume);
+      }
+
+      // set initial playing state
+      if (this.props.playing) {
+        this.wavesurfer.play();
+      }
+
+      // set initial zoom
+      if (this.props.zoom) {
+        this.wavesurfer.zoom(this.props.zoom);
+      }
+    });
+
+    this.wavesurfer.on('audioprocess', pos => {
+      this.setState({
+        pos
+      });
+      this.props.onPosChange({
+        wavesurfer: this.wavesurfer,
+        originalArgs: [pos]
+      });
+    });
+
+    // `audioprocess` is not fired when seeking, so we have to plug into the
+    // `seek` event and calculate the equivalent in seconds (seek event
+    // receives a position float 0-1) – See the README.md for explanation why we
+    // need this
+    this.wavesurfer.on('seek', pos => {
+      if (this.state.isReady) {
+        const formattedPos = this._posToSec(pos);
+        this.setState({
+          formattedPos
+        });
+        this.props.onPosChange({
+          wavesurfer: this.wavesurfer,
+          originalArgs: [formattedPos]
+        });
+      }
+    });
+
+    // hook up events to callback handlers passed in as props
+    EVENTS.forEach(e => {
+      const propCallback = this.props[`on${capitaliseFirstLetter(e)}`];
+      const wavesurfer = this.wavesurfer;
+      if (propCallback) {
+        this.wavesurfer.on(e, (...originalArgs) => {
+          propCallback({
+            wavesurfer,
+            originalArgs
+          });
+        });
+      }
+    });
+
+    // if audioFile prop, load file
+    if (this.props.audioFile) {
+      this._loadAudio(this.props.audioFile, this.props.audioPeaks);
+    }
+
+    // if mediaElt prop, load media Element
+    if (this.props.mediaElt) {
+      this._loadMediaElt(this.props.mediaElt, this.props.audioPeaks);
+    }
+
+    if (this.props.responsive) {
+      window.addEventListener('resize', this._handleResize, false);
+    }
+  }
+
+  // update wavesurfer rendering manually
+  componentWillReceiveProps(nextProps) {
+    let newSource = false;
+    let seekToInNewFile;
+
+    // update audioFile
+    if (this.props.audioFile !== nextProps.audioFile) {
+      this.setState({
+        isReady: false
+      });
+      this._loadAudio(nextProps.audioFile, nextProps.audioPeaks);
+      newSource = true;
+    }
+
+    // update mediaElt
+    if (this.props.mediaElt !== nextProps.mediaElt) {
+      this.setState({
+        isReady: false
+      });
+      this._loadMediaElt(nextProps.mediaElt, nextProps.audioPeaks);
+      newSource = true;
+    }
+
+    // update peaks
+    if (this.props.audioPeaks !== nextProps.audioPeaks) {
+      if (nextProps.mediaElt) {
+        this._loadMediaElt(nextProps.mediaElt, nextProps.audioPeaks);
+      } else {
+        this._loadAudio(nextProps.audioFile, nextProps.audioPeaks);
+      }
+    }
+
+    // update position
+    if (
+      nextProps.pos !== undefined &&
+      this.state.isReady &&
+      nextProps.pos !== this.props.pos &&
+      nextProps.pos !== this.state.pos
+    ) {
+      if (newSource) {
+        seekToInNewFile = this.wavesurfer.on('ready', () => {
+          this._seekTo(nextProps.pos);
+          seekToInNewFile.un();
+        });
+      } else {
+        this._seekTo(nextProps.pos);
+      }
+    }
+
+    // update playing state
+    if (
+      !newSource &&
+      (this.props.playing !== nextProps.playing ||
+        this.wavesurfer.isPlaying() !== nextProps.playing)
+    ) {
+      if (nextProps.playing) {
+        this.wavesurfer.play();
+      } else {
+        this.wavesurfer.pause();
+      }
+    }
+
+    // update volume
+    if (this.props.volume !== nextProps.volume) {
+      this.wavesurfer.setVolume(nextProps.volume);
+    }
+
+    // update volume
+    if (this.props.zoom !== nextProps.zoom) {
+      this.wavesurfer.zoom(nextProps.zoom);
+    }
+
+    // update audioRate
+    if (this.props.options.audioRate !== nextProps.options.audioRate) {
+      this.wavesurfer.setPlaybackRate(nextProps.options.audioRate);
+    }
+
+    // turn responsive on
+    if (
+      nextProps.responsive &&
+      this.props.responsive !== nextProps.responsive
+    ) {
+      window.addEventListener('resize', this._handleResize, false);
+    }
+
+    // turn responsive off
+    if (
+      !nextProps.responsive &&
+      this.props.responsive !== nextProps.responsive
+    ) {
+      window.removeEventListener('resize', this._handleResize);
+    }
+  }
+
+  componentWillUnmount() {
+    // remove listeners
+    EVENTS.forEach(e => {
+      this.wavesurfer.un(e);
+    });
+
+    // destroy wavesurfer instance
+    this.wavesurfer.destroy();
+
+    if (this.props.responsive) {
+      window.removeEventListener('resize', this._handleResize);
+    }
+  }
+
+  // receives seconds and transforms this to the position as a float 0-1
+  _secToPos(sec) {
+    return 1 / this.wavesurfer.getDuration() * sec;
+  }
+
+  // receives position as a float 0-1 and transforms this to seconds
+  _posToSec(pos) {
+    return pos * this.wavesurfer.getDuration();
+  }
+
+  // pos is in seconds, the 0-1 proportional position we calculate here …
+  _seekTo(sec) {
+    const pos = this._secToPos(sec);
+    if (this.props.options.autoCenter) {
+      this.wavesurfer.seekAndCenter(pos);
+    } else {
+      this.wavesurfer.seekTo(pos);
+    }
+  }
+
+  // load a media element selector or HTML element
+  // if selector, get the HTML element for it
+  // and pass to _loadAudio
+  _loadMediaElt(selectorOrElt, audioPeaks) {
+    if (selectorOrElt instanceof window.HTMLElement) {
+      this._loadAudio(selectorOrElt, audioPeaks);
+    } else {
+      if (!window.document.querySelector(selectorOrElt)) {
+        throw new Error('Media Element not found!');
+      }
+
+      this._loadAudio(window.document.querySelector(selectorOrElt), audioPeaks);
+    }
+  }
+
+  // pass audio data to wavesurfer
+  _loadAudio(audioFileOrElt, audioPeaks) {
+    if (audioFileOrElt instanceof window.HTMLElement) {
+      // media element
+      this.wavesurfer.loadMediaElement(audioFileOrElt, audioPeaks);
+    } else if (typeof audioFileOrElt === 'string') {
+      // bog-standard string is handled by load method and ajax call
+      this.wavesurfer.load(audioFileOrElt, audioPeaks);
+    } else if (
+      audioFileOrElt instanceof window.Blob ||
+      audioFileOrElt instanceof window.File
+    ) {
+      // blob or file is loaded with loadBlob method
+      this.wavesurfer.loadBlob(audioFileOrElt, audioPeaks);
+    } else {
+      throw new Error(`Wavesurfer._loadAudio expects prop audioFile
+        to be either HTMLElement, string or file/blob`);
+    }
+  }
+
+  render() {
+    const childrenWithProps = this.props.children
+      ? React.Children.map(this.props.children, child =>
+          React.cloneElement(child, {
+            wavesurfer: this.wavesurfer,
+            isReady: this.state.isReady
+          })
+        )
+      : false;
+    return (
+      <div>
+        <div
+          ref={c => {
+            this.wavesurferEl = c;
+          }}
+        />
+        {childrenWithProps}
+      </div>
+    );
+  }
+}
+
+WavesurferComponent.propTypes = {
+  playing: PropTypes.bool,
+  pos: PropTypes.number,
+  audioFile: (props, propName, componentName) => {
+    const prop = props[propName];
+    if (
+      prop &&
+      typeof prop !== 'string' &&
+      !(prop instanceof window.Blob) &&
+      !(prop instanceof window.File)
+    ) {
+      return new Error(`Invalid ${propName} supplied to ${componentName}
+        expected either string or file/blob`);
+    }
+
+    return null;
+  },
+
+  mediaElt: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(window.HTMLElement)
+  ]),
+  audioPeaks: PropTypes.array,
+  volume: PropTypes.number,
+  zoom: PropTypes.number,
+  responsive: PropTypes.bool,
+  onPosChange: PropTypes.func,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
+  options: PropTypes.shape({
+    audioRate: PropTypes.number,
+    backend: PropTypes.oneOf(['WebAudio', 'MediaElement']),
+    barWidth: (props, propName, componentName) => {
+      const prop = props[propName];
+      if (prop !== undefined && typeof prop !== 'number') {
+        return new Error(`Invalid ${propName} supplied to ${componentName}
+          expected either undefined or number`);
+      }
+
+      return null;
+    },
+
+    cursorColor: PropTypes.string,
+    cursorWidth: positiveIntegerProptype,
+    dragSelection: PropTypes.bool,
+    fillParent: PropTypes.bool,
+    height: positiveIntegerProptype,
+    hideScrollbar: PropTypes.bool,
+    interact: PropTypes.bool,
+    loopSelection: PropTypes.bool,
+    mediaControls: PropTypes.bool,
+    minPxPerSec: positiveIntegerProptype,
+    normalize: PropTypes.bool,
+    pixelRatio: PropTypes.number,
+    progressColor: PropTypes.string,
+    scrollParent: PropTypes.bool,
+    skipLength: PropTypes.number,
+    waveColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(window.CanvasGradient)
+    ]),
+    autoCenter: PropTypes.bool
+  })
+};
+
+WavesurferComponent.defaultProps = {
+  playing: false,
+  pos: 0,
+  options: WaveSurfer.defaultParams,
+  responsive: true,
+  onPosChange: () => {}
+};
+
+export type Props = {}
+
+export default WavesurferComponent;
