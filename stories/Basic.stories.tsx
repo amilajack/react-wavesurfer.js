@@ -1,38 +1,23 @@
 import React from 'react';
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Story, Meta } from '@storybook/react/types-6-0';
-
+import { Story, Meta } from '@storybook/react';
 import WavesurferComponent, { Props } from '../index';
 
 export default {
-  title: 'Example/Button',
+  title: 'Basic Usage',
   component: WavesurferComponent,
   argTypes: {
+    waveColor: { control: 'color' },
     backgroundColor: { control: 'color' },
   },
 } as Meta;
 
-const Template: Story<Props> = (args) => <WavesurferComponent audioFile="https://freesound.org/data/previews/462/462808_8386274-lq.mp3" {...args} />;
+const Template: Story<Props> = (args) => <WavesurferComponent {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Button',
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
-};
-
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
+export const Basic = Template.bind({});
+Basic.args = {
+  src: "https://freesound.org/data/previews/462/462808_8386274-lq.mp3",
+  waveColor: 'red',
+  backgroundColor: 'white',
+  barWidth: 3,
+  cursorWidth: 10,
 };

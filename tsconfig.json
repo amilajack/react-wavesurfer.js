@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "lib": ["dom"],
+    "lib": ["dom", "es2019"],
+    "target": "es2019",
+    "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "declaration": true,
     "outDir": "dist",
     "jsx": "react",
-    "strict": true
+    "strict": true,
+    "sourceMap": true
   },
   "include": ["index.tsx"]
 }

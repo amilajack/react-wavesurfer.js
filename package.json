@@ -1,7 +1,7 @@
 {
   "name": "react-wavesurfer.js",
   "version": "0.0.0",
-  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "author": "Amila Welihinda <amilajack@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -10,10 +10,13 @@
     "@storybook/addon-essentials": "^6.0.21",
     "@storybook/addon-links": "^6.0.21",
     "@storybook/react": "^6.0.21",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.2",
     "@types/jest": "^26.0.10",
     "@types/react": "^16.9.47",
     "@types/wavesurfer.js": "^3.3.1",
     "babel-loader": "^8.1.0",
+    "canvas": "^2.6.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-typescript": "^8.0.2",
@@ -28,12 +31,14 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
-    "jest": "^26.0.1",
+    "gh-pages": "^3.1.0",
+    "jest": "^26.4.2",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
+    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "ts-jest": "^26.2.0",
+    "ts-jest": "^26.3.0",
     "typescript": "^4.0.2",
     "wavesurfer.js": "^4.0.1"
   },
@@ -43,9 +48,8 @@
     "wavesurfer.js": "^4.0.1"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production rm -rf dist && tsc",
-    "lint": "eslint . --ignore-pattern dist",
-    "lint-fix": "yarn lint --fix",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint . --ignore-pattern dist --fix",
     "preversion": "yarn build",
     "test": "yarn build && jest",
     "storybook": "start-storybook -p 6006",
@@ -68,10 +72,10 @@
     "waveform"
   ],
   "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
+    "preset": "ts-jest"
   },
   "dependencies": {
+    "@types/react-addons-test-utils": "^0.14.25",
     "@types/react-dom": "^16.9.8"
   }
 }
