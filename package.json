@@ -1,5 +1,6 @@
 {
   "name": "react-wavesurfer.js",
+  "description": "React bindings for wavesurfer.js",
   "version": "0.0.1-0",
   "module": "./dist/index.js",
   "author": "Amila Welihinda <amilajack@gmail.com>",
@@ -16,21 +17,15 @@
     "@types/react-addons-test-utils": "^0.14.25",
     "@types/react-dom": "^16.9.8",
     "@types/wavesurfer.js": "^3.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
     "canvas": "^2.6.1",
-    "eslint": "^7.2.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-config-airbnb-typescript": "^8.0.2",
-    "eslint-config-bliss": "^5.0.0",
-    "eslint-config-erb": "1.0.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-compat": "^3.7.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-bliss-typescript": "^5.0.0",
     "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jest": "^23.13.2",
-    "eslint-plugin-jsx-a11y": "6.2.3",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4",
+    "eslint-plugin-react-hooks": "4.0.0",
     "gh-pages": "^3.1.0",
     "jest": "^26.4.2",
     "prettier": "^2.0.5",
@@ -55,8 +50,19 @@
   },
   "eslintConfig": {
     "extends": [
-      "erb"
-    ]
+      "bliss-typescript"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": ".",
+      "createDefaultProgram": true
+    },
+    "rules": {
+      "import/prefer-default-export": "off",
+      "class-methods-use-this": "off"
+    }
   },
   "renovate": {
     "extends": [
@@ -67,7 +73,16 @@
     "react",
     "wavesurfer.js",
     "wavesurfer",
-    "waveform"
+    "waveform",
+    "typescript",
+    "ts",
+    "tsx",
+    "spectrogram",
+    "microphone",
+    "canvas",
+    "pan",
+    "zoom",
+    "timeline"
   ],
   "jest": {
     "preset": "ts-jest"
