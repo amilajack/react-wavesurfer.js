@@ -112,6 +112,20 @@ function MyWaveform() {
 - [ ] MediaSession Plugin Support
 - [ ] Microphone Plugin Support
 
+## Local Setup
+
+```bash
+git clone https://github.com/amilajack/react-wavesurfer.js
+cd react-wavesurfer.js
+yarn
+yarn build
+```
+
+## Related
+
+* [wavesurfer.js](https://github.com/katspaugh/wavesurfer.js)
+* [react-wavesurfer (Archived)](https://github.com/mspae/react-wavesurfer)
+
 ## Credits
 
 Credits go to [mspae](https://github.com/mspae) for starting the [inital work on this](https://github.com/mspae/react-wavesurfer)
