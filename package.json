@@ -1,7 +1,7 @@
 {
   "name": "react-wavesurfer.js",
   "description": "React bindings for wavesurfer.js",
-  "version": "0.0.1-4",
+  "version": "0.0.1-5",
   "module": "./dist/index.js",
   "main": "./dist/index.js",
   "author": "Amila Welihinda <amilajack@gmail.com>",
