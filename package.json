@@ -44,7 +44,6 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "lint": "eslint . --ignore-pattern dist --fix",
-    "preversion": "yarn build",
     "test": "yarn build && jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

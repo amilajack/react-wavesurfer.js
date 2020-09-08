@@ -28,7 +28,7 @@ describe("component events", () => {
     render(<Wavesurfer onReady={onReady} src="https://my-audio.mp3" />);
   });
 
-  test("should allow onReady", async () => {
+  test("should render with onPlay and onPositionChange", async () => {
     const fn = jest.fn();
     render(
       <Wavesurfer
