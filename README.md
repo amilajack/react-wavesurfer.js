@@ -26,14 +26,14 @@ function MyWaveform() {
   const [muted, setMuted] = useState(false);
 
   const handlePositionChange = (position) => { /* ... */ };
-  const onReady = () => console.log('done loading!');
+  const onReadyHandler = () => console.log('done loading!');
 
   return (
     <Wavesurfer
       src="path/to/audio/file.mp3"
       position={position}
       onPositionChange={handlePositionChange}
-      onReady={onReady}
+      onReady={onReadyHandler}
       playing={playing}
       muted={muted}
     />
@@ -96,7 +96,7 @@ function MyWaveform() {
         height={100}
         primaryColor="green"
       />
-    </>
+    </Wavesurfer>
   );
 }
 ```

@@ -1,6 +1,6 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
-import WavesurferComponent, { Props } from "../index";
+import WavesurferComponent, { Props } from "../src/index";
 
 export default {
   title: "Basic Usage",
