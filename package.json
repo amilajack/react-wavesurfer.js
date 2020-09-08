@@ -6,6 +6,7 @@
   "main": "./dist/index.js",
   "author": "Amila Welihinda <amilajack@gmail.com>",
   "license": "MIT",
+  "files": ["dist"],
   "devDependencies": {
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-essentials": "^6.0.21",
@@ -42,7 +43,7 @@
     "wavesurfer.js": "^4.0.1"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "lint": "eslint . --ignore-pattern dist --fix",
     "test": "yarn build && jest",
     "storybook": "start-storybook -p 6006",
