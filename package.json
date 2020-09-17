@@ -46,7 +46,7 @@
     "wavesurfer.js": "^4.0.1"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc && yarn build-storybook",
+    "build": "rm -rf dist && tsc",
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
     "test": "yarn build && jest",
