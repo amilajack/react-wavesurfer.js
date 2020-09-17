@@ -293,6 +293,20 @@ export default class WavesurferComponent extends Component<Props, State> {
       if (this.props.zoom) {
         this.wavesurfer.zoom(this.props.zoom);
       }
+
+      if (this.props.backgroundColor) {
+        this.wavesurfer.setBackgroundColor(this.props.backgroundColor);
+      }
+      // update waveColor
+      if (this.props.waveColor) {
+        this.wavesurfer.setWaveColor(this.props.waveColor);
+      }
+      if (this.props.cursorColor) {
+        this.wavesurfer.setCursorColor(this.props.cursorColor);
+      }
+      if (this.props.height) {
+        this.wavesurfer.setHeight(this.props.height);
+      }
     });
 
     this.wavesurfer.on("audioprocess", (pos) => {
