@@ -16,8 +16,8 @@ const Template: Story<Props> = (args) => <WavesurferComponent {...args} />;
 export const Basic = Template.bind({});
 Basic.args = {
   src: "https://freesound.org/data/previews/462/462808_8386274-lq.mp3",
-  waveColor: "red",
-  backgroundColor: "white",
-  barWidth: 3,
-  cursorWidth: 10,
+  waveColor: "yellow",
+  backgroundColor: "black",
+  cursorColor: "red",
+  cursorWidth: 2,
 };
