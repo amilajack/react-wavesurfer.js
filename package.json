@@ -1,7 +1,7 @@
 {
   "name": "react-wavesurfer.js",
   "description": "React bindings for wavesurfer.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "module": "./dist/index.js",
   "main": "./dist/index.js",
   "author": "Amila Welihinda <amilajack@gmail.com>",
@@ -54,7 +54,7 @@
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
     "test": "yarn build && jest",
-    "release" : "standard-version",
+    "release": "standard-version",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages"
