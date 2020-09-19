@@ -3,6 +3,51 @@ import PropTypes from "prop-types";
 import WaveSurfer, { WaveSurferParams } from "wavesurfer.js";
 import { capitaliseFirstLetter } from "./helpers";
 
+const wavesurferParams = new Set([
+  "audioContext",
+  "audioRate",
+  "audioScriptProcessor",
+  "autoCenter",
+  "autoCenterRate",
+  "autoCenterImmediately",
+  "backend",
+  "backgroundColor",
+  "barHeight",
+  "barRadius",
+  "barGap",
+  "barWidth",
+  "barMinHeight",
+  "closeAudioContext",
+  "cursorColor",
+  "cursorWidth",
+  "drawingContextAttributes",
+  "duration",
+  "fillParent",
+  "forceDecode",
+  "height",
+  "hideScrollbar",
+  "interact",
+  "loopSelection",
+  "maxCanvasWidth",
+  "mediaControls",
+  "mediaType",
+  "minPxPerSec",
+  "normalize",
+  "partialRender",
+  "pixelRatio",
+  "plugins",
+  "progressColor",
+  "removeMediaElementOnDestroy",
+  "renderer",
+  "responsive",
+  "rtl",
+  "scrollParent",
+  "skipLength",
+  "splitChannels",
+  "waveColor",
+  "xhr",
+]);
+
 const EVENTS: ReadonlyArray<string> = [
   "audioprocess",
   "error",
@@ -83,50 +128,6 @@ type State = {
   formattedPos: number;
 };
 
-// Wavesurfer's default options.
-// @TODO: Ideally, we can just import these default values from wavesurfer so we
-//        don't have to keep a copy of them heer
-const wavesurferDefaultParams = {
-  audioRate: 1,
-  autoCenter: true,
-  autoCenterRate: 5,
-  autoCenterImmediately: false,
-  backend: "WebAudio",
-  barHeight: 1,
-  barRadius: 0,
-  cursorColor: "#333",
-  cursorWidth: 1,
-  drawingContextAttributes: {
-    // Boolean that hints the user agent to reduce the latency
-    // by desynchronizing the canvas paint cycle from the event
-    // loop
-    desynchronized: false,
-  },
-  fillParent: true,
-  forceDecode: false,
-  height: 128,
-  hideScrollbar: false,
-  interact: true,
-  loopSelection: true,
-  maxCanvasWidth: 4000,
-  mediaControls: false,
-  mediaType: "audio",
-  minPxPerSec: 20,
-  normalize: false,
-  partialRender: false,
-  pixelRatio: window.devicePixelRatio,
-  plugins: [],
-  progressColor: "#555",
-  removeMediaElementOnDestroy: true,
-  responsive: false,
-  rtl: false,
-  scrollParent: false,
-  skipLength: 2,
-  splitChannels: false,
-  waveColor: "#999",
-  xhr: {},
-};
-
 export default class WavesurferComponent extends Component<Props, State> {
   private wavesurfer?: WaveSurfer;
 
@@ -141,7 +142,6 @@ export default class WavesurferComponent extends Component<Props, State> {
   };
 
   static defaultProps = {
-    ...wavesurferDefaultParams,
     playing: false,
     pos: 0,
     responsive: true,
@@ -251,9 +251,7 @@ export default class WavesurferComponent extends Component<Props, State> {
   componentDidMount() {
     if (!this.wavesurferElm) throw new Error("Conainer not defined");
     const wavesurferProps = Object.fromEntries(
-      Object.entries(this.props).filter(
-        ([key]) => key in wavesurferDefaultParams
-      )
+      Object.entries(this.props).filter(([key]) => wavesurferParams.has(key))
     );
     const options = {
       ...wavesurferProps,
@@ -292,20 +290,6 @@ export default class WavesurferComponent extends Component<Props, State> {
       // set initial zoom
       if (this.props.zoom) {
         this.wavesurfer.zoom(this.props.zoom);
-      }
-
-      if (this.props.backgroundColor) {
-        this.wavesurfer.setBackgroundColor(this.props.backgroundColor);
-      }
-      // update waveColor
-      if (this.props.waveColor) {
-        this.wavesurfer.setWaveColor(this.props.waveColor);
-      }
-      if (this.props.cursorColor) {
-        this.wavesurfer.setCursorColor(this.props.cursorColor);
-      }
-      if (this.props.height) {
-        this.wavesurfer.setHeight(this.props.height);
       }
     });
 
@@ -450,6 +434,13 @@ export default class WavesurferComponent extends Component<Props, State> {
     // update waveColor
     if (nextProps.waveColor && this.props.waveColor !== nextProps.waveColor) {
       this.wavesurfer.setWaveColor(nextProps.waveColor);
+    }
+    // update progressColor
+    if (
+      nextProps.progressColor &&
+      this.props.progressColor !== nextProps.progressColor
+    ) {
+      this.wavesurfer.setProgressColor(nextProps.progressColor);
     }
     if (
       nextProps.cursorColor &&

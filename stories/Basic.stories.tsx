@@ -7,6 +7,8 @@ export default {
   component: WavesurferComponent,
   argTypes: {
     waveColor: { control: "color" },
+    cursorColor: { control: "color" },
+    progressColor: { control: "color" },
     backgroundColor: { control: "color" },
   },
 } as Meta;
@@ -19,5 +21,8 @@ Basic.args = {
   waveColor: "yellow",
   backgroundColor: "black",
   cursorColor: "red",
+  progressColor: "green",
   cursorWidth: 2,
+  barWidth: 2,
+  height: 120,
 };
