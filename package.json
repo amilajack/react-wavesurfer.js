@@ -10,6 +10,8 @@
     "dist"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-essentials": "^6.0.21",
     "@storybook/addon-links": "^6.0.21",
@@ -32,10 +34,12 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "4.0.0",
     "gh-pages": "^3.1.0",
+    "husky": "^4.3.0",
     "jest": "^26.4.2",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "standard-version": "^9.0.0",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2",
     "wavesurfer.js": "^4.0.1"
@@ -50,6 +54,7 @@
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
     "test": "yarn build && jest",
+    "release" : "standard-version",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages"
@@ -92,5 +97,25 @@
   ],
   "jest": {
     "preset": "ts-jest"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E  HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "never",
+        [
+          "start-case",
+          "pascal-case"
+        ]
+      ]
+    }
   }
 }
