@@ -51,13 +51,9 @@
     "wavesurfer.js": "^4.0.1"
   },
   "scripts": {
-<<<<<<< HEAD
-    "build": "rm -rf dist && tsc",
-=======
     "build": "rm -rf dist && tsc && yarn build-storybook",
-    "deploy": "yarn docs && gh-pages -d build",
+    "deploy": "yarn docs",
     "docs": "rm -rf docs && typedoc ./src --out",
->>>>>>> add docs and deploy scripts for TypeDoc, progressing #9 forward
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
     "test": "yarn build && jest",
