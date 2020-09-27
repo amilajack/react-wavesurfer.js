@@ -108,18 +108,20 @@ export interface Props extends Omit<WaveSurferParams, "container"> {
   volume?: number;
   zoom?: number;
   responsive?: boolean;
-  onPositionChange?: Function;
-  onAudioprocess?: Function;
-  onError?: Function;
-  onFinish?: Function;
-  onLoading?: Function;
-  onMouseup?: Function;
-  onPause?: Function;
-  onPlay?: Function;
-  onReady?: Function;
-  onScroll?: Function;
-  onSeek?: Function;
-  onZoom?: Function;
+  onPositionChange?: (position: number) => void;
+  onAudioprocess?: (time: number) => void;
+  onError?: (error: Error) => void;
+  onFinish?: () => void;
+  onLoading?: (percent: number) => void;
+  onMouseup?: () => void;
+  onPause?: () => void;
+  onPlay?: () => void;
+  onReady?: () => void;
+  onScroll?: () => void;
+  onSeek?: () => void;
+  // pxPerSec Number of horizontal pixels per second of
+  // audio, if none is set the waveform returns to unzoomed state
+  onZoom?: (pxPerSec: number) => void;
 }
 
 type State = {
@@ -298,10 +300,7 @@ export default class WavesurferComponent extends Component<Props, State> {
         pos,
       });
       if (this.props.onPositionChange) {
-        this.props.onPositionChange({
-          wavesurfer: this.wavesurfer,
-          originalArgs: [pos],
-        });
+        this.props.onPositionChange(pos);
       }
     });
 
@@ -315,10 +314,7 @@ export default class WavesurferComponent extends Component<Props, State> {
         this.setState({
           formattedPos,
         });
-        this.props.onPositionChange({
-          wavesurfer: this.wavesurfer,
-          originalArgs: [formattedPos],
-        });
+        this.props.onPositionChange(formattedPos);
       }
     });
 
