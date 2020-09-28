@@ -41,6 +41,7 @@
     "react-dom": "^16.13.1",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.0",
+    "typedoc": "^0.19.1",
     "typescript": "^4.0.3",
     "wavesurfer.js": "^4.1.1"
   },
@@ -50,7 +51,8 @@
     "wavesurfer.js": "^4.0.1"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc && yarn build-storybook",
+    "docs": "rm -rf docs && typedoc ./src --out",
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
     "test": "yarn build && jest",
