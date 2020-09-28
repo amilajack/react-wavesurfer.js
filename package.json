@@ -52,7 +52,6 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc && yarn build-storybook",
-    "deploy": "yarn docs",
     "docs": "rm -rf docs && typedoc ./src --out",
     "lint": "eslint . --ignore-pattern dist --fix",
     "start": "yarn storybook",
