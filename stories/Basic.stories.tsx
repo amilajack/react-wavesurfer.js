@@ -24,5 +24,6 @@ Basic.args = {
   progressColor: "green",
   cursorWidth: 2,
   barWidth: 2,
+  playing: false,
   height: 120,
 };
