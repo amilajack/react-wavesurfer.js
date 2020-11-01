@@ -19,7 +19,7 @@
     "@storybook/storybook-deployer": "^2.8.7",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
-    "@types/jest": "^26.0.14",
+    "@types/jest": "^26.0.15",
     "@types/react": "^16.9.49",
     "@types/react-addons-test-utils": "^0.14.25",
     "@types/react-dom": "^16.9.9",
