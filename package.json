@@ -22,7 +22,7 @@
     "@types/jest": "^26.0.14",
     "@types/react": "^16.9.49",
     "@types/react-addons-test-utils": "^0.14.25",
-    "@types/react-dom": "^16.9.8",
+    "@types/react-dom": "^16.9.9",
     "@types/wavesurfer.js": "^3.3.1",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "canvas": "^2.6.1",
