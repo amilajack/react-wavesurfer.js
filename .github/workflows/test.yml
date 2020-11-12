@@ -31,8 +31,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: yarn install
+      - name: Install Deps
         run: yarn --frozen-lockfile
 
-      - name: yarn test
+      - name: Test
         run: yarn test
