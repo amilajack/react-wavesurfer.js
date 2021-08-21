@@ -9,16 +9,16 @@ react-wavesurfer.js
 
 ```bash
 # NPM
-npm install wavesurfer.js@4.x.x react-wavesurfer.js
+npm install wavesurfer.js react-wavesurfer.js
 # Yarn
-yarn add wavesurfer.js@4.x.x react-wavesurfer.js
+yarn add wavesurfer.js react-wavesurfer.js
 ```
 
 ## Basic Usage
 
 ```tsx
 import React, { useState } from 'react';
-import Wavesurfer from 'react-wavesurfer';
+import Wavesurfer from 'react-wavesurfer.js';
 
 function MyWaveform() {
   const [position, setPosition] = useState(0);
