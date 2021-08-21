@@ -16,6 +16,8 @@ yarn add wavesurfer.js react-wavesurfer.js
 
 ## Basic Usage
 
+See the [live demo](https://codesandbox.io/s/react-wavesurfer-js-w3brk).
+
 ```tsx
 import React, { useState } from 'react';
 import Wavesurfer from 'react-wavesurfer.js';
