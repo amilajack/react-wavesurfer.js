@@ -9,9 +9,9 @@ react-wavesurfer.js
 
 ```bash
 # NPM
-npm install wavesurfer.js react-wavesurfer.js
+npm install wavesurfer.js@4.x.x react-wavesurfer.js
 # Yarn
-yarn add wavesurfer.js react-wavesurfer.js
+yarn add wavesurfer.js@4.x.x react-wavesurfer.js
 ```
 
 ## Basic Usage
