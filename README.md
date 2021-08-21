@@ -44,7 +44,7 @@ function MyWaveform() {
 
 ```tsx
 import React, { useState } from 'react';
-import Wavesurfer from 'react-wavesurfer';
+import Wavesurfer from 'react-wavesurfer.js';
 
 function MyWaveform() {
   const [zoomLevel, setZoomLevel] = useState(0);
@@ -75,9 +75,9 @@ function MyWaveform() {
 
 ```tsx
 import React, { useState } from 'react';
-import Wavesurfer from 'react-wavesurfer';
-import MiniMap from 'react-wavesurfer/plugins/minimap';
-import Timeline from 'react-wavesurfer/plugins/timeline';
+import Wavesurfer from 'react-wavesurfer.js';
+import MiniMap from 'react-wavesurfer.js/plugins/minimap';
+import Timeline from 'react-wavesurfer.js/plugins/timeline';
 
 function MyWaveform() {
   return (
