@@ -4,7 +4,7 @@
   "description": "React bindings for wavesurfer.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amilajack/react-wavesurfer.git"
+    "url": "git+https://github.com/amilajack/react-wavesurfer.js.git"
   },
   "bugs": {
     "url": "https://github.com/amilajack/react-wavesurfer.js/issues"
