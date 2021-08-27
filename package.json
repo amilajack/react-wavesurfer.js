@@ -1,6 +1,6 @@
 {
   "name": "react-wavesurfer.js",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "description": "React bindings for wavesurfer.js",
   "repository": {
     "type": "git",
@@ -12,12 +12,9 @@
   "homepage": "https://github.com/amilajack/react-wavesurfer.js",
   "keywords": [
     "react",
-    "wavesurfer.js",
     "wavesurfer",
     "waveform",
     "typescript",
-    "ts",
-    "tsx",
     "spectrogram",
     "microphone",
     "canvas",
