@@ -33,11 +33,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc && yarn build-storybook && rm -rf storybook-static",
+    "build": "rm -rf dist && tsc && npm run build-storybook && rm -rf storybook-static",
     "docs": "rm -rf docs && typedoc ./src --out",
     "lint": "eslint . --ignore-pattern dist --fix",
-    "start": "yarn storybook",
-    "test": "yarn build && jest && tsc",
+    "start": "npm run storybook",
+    "test": "npm run build && jest && tsc",
     "release": "standard-version",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
