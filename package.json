@@ -1,7 +1,15 @@
 {
   "name": "react-wavesurfer.js",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "description": "React bindings for wavesurfer.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amilajack/react-wavesurfer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amilajack/react-wavesurfer.js/issues"
+  },
+  "homepage": "https://github.com/amilajack/react-wavesurfer.js",
   "keywords": [
     "react",
     "wavesurfer.js",
