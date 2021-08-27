@@ -1,5 +1,4 @@
 import { Component } from "react";
-import PropTypes from "prop-types";
 import RegionsPlugin from "wavesurfer.js/dist/plugin/wavesurfer.regions";
 import { capitaliseFirstLetter } from "../helpers";
 
@@ -29,18 +28,12 @@ const REGION_EVENTS: ReadonlyArray<string> = [
 
 type Props = {
   isReady: boolean;
-  regions: {};
   wavesurfer: WaveSurfer;
+  regions: {};
 };
 
 class Regions extends Component<Props> {
   state = {};
-
-  static propTypes = {
-    isReady: PropTypes.bool,
-    regions: PropTypes.object,
-    wavesurfer: PropTypes.object,
-  };
 
   static defaultProps = {
     regions: [],

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import TimelinePlugin from "wavesurfer.js/dist/plugin/wavesurfer.timeline";
 
 interface WaveSurferTimelineOpts {
@@ -25,18 +24,13 @@ interface WaveSurferTimelineOpts {
 interface Props extends WaveSurferTimelineOpts {
   isReady: boolean;
   wavesurfer: WaveSurfer;
+  options: {};
 }
 
 class TimelineComponent extends Component<Props> {
   private timeline = null;
 
   private timelineElm?: HTMLElement;
-
-  static propTypes = {
-    isReady: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired,
-    wavesurfer: PropTypes.object,
-  };
 
   static defaultProps = {
     isReady: false,

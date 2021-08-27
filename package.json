@@ -1,87 +1,7 @@
 {
   "name": "react-wavesurfer.js",
-  "description": "React bindings for wavesurfer.js",
   "version": "0.0.4",
-  "module": "./dist/index.js",
-  "main": "./dist/index.js",
-  "author": "Amila Welihinda <amilajack@gmail.com>",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "@storybook/addon-actions": "^6.0.28",
-    "@storybook/addon-essentials": "^6.0.28",
-    "@storybook/addon-links": "^6.0.28",
-    "@storybook/react": "^6.0.28",
-    "@storybook/storybook-deployer": "^2.8.10",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@types/jest": "^26.0.24",
-    "@types/react": "^16.9.56",
-    "@types/react-addons-test-utils": "^0.14.26",
-    "@types/react-dom": "^16.9.9",
-    "@types/wavesurfer.js": "^3.3.2",
-    "@typescript-eslint/eslint-plugin": "^4.28.5",
-    "canvas": "^2.8.0",
-    "eslint": "7.32.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-bliss-typescript": "^5.0.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "gh-pages": "^3.1.0",
-    "husky": "^4.3.8",
-    "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "standard-version": "^9.0.0",
-    "ts-jest": "^26.4.4",
-    "typedoc": "^0.19.2",
-    "typescript": "^4.0.5",
-    "wavesurfer.js": "^4.2.0"
-  },
-  "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "wavesurfer.js": "^4.0.1"
-  },
-  "scripts": {
-    "build": "rm -rf dist && tsc && yarn build-storybook && rm -rf storybook-static",
-    "docs": "rm -rf docs && typedoc ./src --out",
-    "lint": "eslint . --ignore-pattern dist --fix",
-    "start": "yarn storybook",
-    "test": "yarn build && jest",
-    "release": "standard-version",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
-  },
-  "eslintConfig": {
-    "extends": [
-      "bliss-typescript"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2020,
-      "sourceType": "module",
-      "project": "./tsconfig.json",
-      "tsconfigRootDir": ".",
-      "createDefaultProgram": true
-    },
-    "rules": {
-      "import/prefer-default-export": "off",
-      "class-methods-use-this": "off"
-    }
-  },
-  "renovate": {
-    "extends": [
-      "bliss"
-    ]
-  },
+  "description": "React bindings for wavesurfer.js",
   "keywords": [
     "react",
     "wavesurfer.js",
@@ -97,13 +17,24 @@
     "zoom",
     "timeline"
   ],
-  "jest": {
-    "preset": "ts-jest"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E  HUSKY_GIT_PARAMS"
-    }
+  "license": "MIT",
+  "author": "Amila Welihinda <amilajack@gmail.com>",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc && yarn build-storybook && rm -rf storybook-static",
+    "docs": "rm -rf docs && typedoc ./src --out",
+    "lint": "eslint . --ignore-pattern dist --fix",
+    "start": "yarn storybook",
+    "test": "yarn build && jest && tsc",
+    "release": "standard-version",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "deploy-storybook": "storybook-to-ghpages",
+    "prepare": "husky install"
   },
   "commitlint": {
     "extends": [
@@ -119,5 +50,71 @@
         ]
       ]
     }
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "createDefaultProgram": true,
+      "ecmaVersion": 2020,
+      "project": "./tsconfig.json",
+      "sourceType": "module",
+      "tsconfigRootDir": "."
+    },
+    "extends": [
+      "bliss-typescript"
+    ],
+    "rules": {
+      "class-methods-use-this": "off",
+      "import/prefer-default-export": "off"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "@storybook/storybook-deployer": "^2.8.10",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.19",
+    "@types/react-addons-test-utils": "^0.14.26",
+    "@types/react-dom": "^17.0.9",
+    "@types/wavesurfer.js": "^5.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "canvas": "^2.8.0",
+    "eslint": "7.32.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-bliss-typescript": "^5.0.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "gh-pages": "^3.2.3",
+    "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "standard-version": "^9.3.1",
+    "ts-jest": "^27.0.5",
+    "typedoc": "^0.21.7",
+    "typescript": "^4.4.2",
+    "wavesurfer.js": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "wavesurfer.js": "^5.0.0"
+  },
+  "renovate": {
+    "extends": [
+      "bliss"
+    ]
   }
 }

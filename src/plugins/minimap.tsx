@@ -1,23 +1,17 @@
 import { Component } from "react";
-import PropTypes from "prop-types";
 import MinimapPlugin from "wavesurfer.js/dist/plugin/wavesurfer.minimap";
 import { ListenerDescriptor } from "wavesurfer.js";
 
 type Props = {
   isReady: boolean;
   wavesurfer: WaveSurfer;
+  options: {};
 };
 
 class Minimap extends Component<Props> {
   private map = undefined;
 
   private readyListener?: ListenerDescriptor;
-
-  static propTypes = {
-    isReady: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired,
-    wavesurfer: PropTypes.object,
-  };
 
   static defaultProps = {
     isReady: false,

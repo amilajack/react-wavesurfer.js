@@ -1,6 +1,7 @@
 import React, { Component, ReactElement } from "react";
-import PropTypes from "prop-types";
-import WaveSurfer, { WaveSurferParams } from "wavesurfer.js";
+import WaveSurfer from "wavesurfer.js";
+import { WaveSurferParams } from "wavesurfer.js/types/params";
+import { ListenerDescriptor } from "wavesurfer.js/types/util";
 import { capitaliseFirstLetter } from "./helpers";
 
 const wavesurferParams = new Set([
@@ -61,27 +62,6 @@ const EVENTS: ReadonlyArray<string> = [
   "seek",
   "zoom",
 ];
-
-/**
- * Throws an error if the prop is defined and not an integer or not positive
- */
-function positiveIntegerProptype(
-  props: Props,
-  propName: keyof Props,
-  componentName: string
-) {
-  const n = props[propName];
-  if (
-    n !== undefined &&
-    (typeof n !== "number" ||
-      (typeof n === "string" && n !== parseInt(n, 10)) ||
-      n < 0)
-  ) {
-    return new Error(`Invalid ${propName} supplied to ${componentName},
-      expected a positive integer`);
-  }
-  return null;
-}
 
 const resizeThrottler = (fn: () => void) => () => {
   let resizeTimeout;
@@ -149,68 +129,6 @@ export default class WavesurferComponent extends Component<Props, State> {
     responsive: true,
     autoCenter: true,
     onPositionChange: () => {},
-  };
-
-  static propTypes = {
-    playing: PropTypes.bool,
-    pos: PropTypes.number,
-    src: (props: Props, propName: keyof Props, componentName: string) => {
-      const prop = props[propName];
-      if (
-        prop &&
-        typeof prop !== "string" &&
-        !(prop instanceof window.Blob) &&
-        !(prop instanceof window.File)
-      ) {
-        return new Error(`Invalid ${propName} supplied to ${componentName}
-          expected either string or file/blob`);
-      }
-
-      return null;
-    },
-    mediaElt: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(window.HTMLElement),
-    ]),
-    audioPeaks: PropTypes.array,
-    volume: PropTypes.number,
-    zoom: PropTypes.number,
-    responsive: PropTypes.bool,
-    onPositionChange: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
-    audioRate: PropTypes.number,
-    backend: PropTypes.oneOf(["WebAudio", "MediaElement"]),
-    barWidth: (props: Props, propName: keyof Props, componentName: string) => {
-      const prop = props[propName];
-      if (prop !== undefined && typeof prop !== "number") {
-        return new Error(`Invalid ${propName} supplied to ${componentName}
-          expected either undefined or number`);
-      }
-      return null;
-    },
-    cursorColor: PropTypes.string,
-    // @ts-ignore
-    cursorWidth: positiveIntegerProptype,
-    dragSelection: PropTypes.bool,
-    fillParent: PropTypes.bool,
-    // @ts-ignore
-    height: positiveIntegerProptype,
-    hideScrollbar: PropTypes.bool,
-    interact: PropTypes.bool,
-    loopSelection: PropTypes.bool,
-    mediaControls: PropTypes.bool,
-    // @ts-ignore
-    minPxPerSec: positiveIntegerProptype,
-    normalize: PropTypes.bool,
-    pixelRatio: PropTypes.number,
-    progressColor: PropTypes.string,
-    scrollParent: PropTypes.bool,
-    skipLength: PropTypes.number,
-    waveColor: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(window.CanvasGradient),
-    ]),
-    autoCenter: PropTypes.bool,
   };
 
   constructor(props: Props) {
@@ -354,7 +272,7 @@ export default class WavesurferComponent extends Component<Props, State> {
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (!this.wavesurfer) throw new Error("wavesurfer not initialized");
     let newSource = false;
-    let seekToInNewFile: WaveSurfer.ListenerDescriptor;
+    let seekToInNewFile: ListenerDescriptor;
 
     // update audioFile
     if (this.props.src !== nextProps.src) {
