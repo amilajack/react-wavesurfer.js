@@ -1,4 +1,8 @@
-import React, { Component, ReactElement } from "react";
+import React, {
+  Component,
+  ReactElement,
+  ReactNode,
+} from "react";
 import WaveSurfer from "wavesurfer.js";
 import { WaveSurferParams } from "wavesurfer.js/types/params";
 import { ListenerDescriptor } from "wavesurfer.js/types/util";
@@ -102,6 +106,7 @@ export interface Props extends Omit<WaveSurferParams, "container"> {
   // pxPerSec Number of horizontal pixels per second of
   // audio, if none is set the waveform returns to unzoomed state
   onZoom?: (pxPerSec: number) => void;
+  children?: ReactNode;
 }
 
 type State = {
