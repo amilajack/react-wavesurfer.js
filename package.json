@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc && npm run build-storybook && rm -rf storybook-static",
+    "build": "rm -rf dist && tsc",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
     "docs": "rm -rf docs && typedoc ./src --out",
@@ -39,7 +39,8 @@
     "release": "standard-version",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
-    "test": "npm run build && jest && tsc"
+    "test": "npm run build && jest && tsc",
+    "version": "npm run build"
   },
   "commitlint": {
     "extends": [
