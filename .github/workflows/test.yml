@@ -3,16 +3,17 @@ name: Test
 on: [pull_request, push]
 
 jobs:
-  release:
-    runs-on: ubuntu-18.04
+  test:
+    runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v3
+      - name: Install Node.js, NPM
+        uses: actions/setup-node@v2
         with:
-          node-version: 16
-      - name: Install Deps
+          node-version: 18
+          cache: npm
+      - name: npm install
         run: npm ci
-      - name: Test
+      - name: npm test
         run: npm test

@@ -121,5 +121,10 @@
     "extends": [
       "bliss"
     ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
